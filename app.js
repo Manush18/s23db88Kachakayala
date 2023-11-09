@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -9,6 +10,9 @@ var usersRouter = require('./routes/users');
 var sportsRouter = require('./routes/sports');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
+var resourceRouter = require('./routes/resource');
+
+var sports = require("./models/sports");
 
 var app = express();
 
@@ -27,6 +31,12 @@ app.use('/users', usersRouter);
 app.use('/sports', sportsRouter);
 app.use('/board', boardRouter);
 app.use('/choose', chooseRouter);
+app.use('/resource', resourceRouter);
+
+
+const connectionString =process.env.MONGO_CON;
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,5 +53,41 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")})
+// We can seed the collection if needed on
+//server start
+async function recreateDB(){
+// Delete everything
+await sports.deleteMany();
+let instance1 = new
+sports({name:"badminton", hours:'4',
+players:15});
+instance1.save().then(doc=>{
+console.log("First object saved")
+
+
+let instance2 = new
+sports({name:"vollyball", hours:'12',
+players:12});
+instance2.save()
+console.log("second object saved")
+
+let instance3 = new
+sports({name:"tableTennis", hours:'4',
+players:14});
+instance3.save()
+console.log("third object saved")}
+).catch(err=>{
+console.error(err)
+});
+}
+let reseed = true;
+if (reseed) {recreateDB();}
+
 
 module.exports = app;
