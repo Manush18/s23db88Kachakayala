@@ -1,0 +1,25 @@
+extends layout
+
+block content
+    h1= title
+    - let sportsid = toShow._id
+    - let name = toShow.name
+    - let hours = toShow.hours
+    - let players = toShow.players
+    div.container
+        div.row
+            div.col-md-6
+                div.card
+                    div.card-body
+                        div.row.mb-2
+                            div.col-sm-6.sportsAttr Sports ID is:
+                            div.col-sm-6 #{sportsid}
+                        div.row.mb-2
+                            div.col-sm-6.sportsAttr Sports name is:
+                            div.col-sm-6 #{name}
+                        div.row.mb-2
+                            div.col-sm-6.sportsAttr Sports hours is:
+                            div.col-sm-6 #{hours}
+                        div.row.mb-2
+                            div.col-sm-6.sportsAttr Sports players is:
+                            div.col-sm-6 #{players}

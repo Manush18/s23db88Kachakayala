@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    div.container
+        h1= title
+        form(id='sportsForm', action="/resource/sports", method="POST")
+            .form-group
+                label(for='name') Sports Name
+                input#name(type='text', name='name', required)
+            .form-group
+                label(for='hours') Sports Hours
+                input#hours(type='number', name='hours', required)
+            .form-group
+                label(for='players') Number of Players
+                input#players(type='number', name='players', required)
+            input(type="submit", value="Submit")
+
+            script.
+                document.forms['sportsForm'].addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    // Client-side validation
+                    const name = document.getElementById('name').value;
+                    const hours = document.getElementById('hours').value;
+                    const players = document.getElementById('players').value;
+
+                    if (!name || !hours || !players) {
+                        alert("Please fill out all the fields");
+                        return;
+                    }
+
+                    // TODO: Show user that form is being submitted
+
+                    fetch(event.target.action, {
+                        method: 'POST',
+                        body: new URLSearchParams(new FormData(event.target))
+                    }).then((resp) => {
+                        return resp.json();
+                    }).then((body) => {
+                        alert("Save succeeded");
+                        // TODO: Handle response body
+                    }).catch((error) => {
+                        // TODO: Handle error
+                        alert("Save failed: " + error);
+                    });
+                });

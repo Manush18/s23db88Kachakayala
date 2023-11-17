@@ -18,12 +18,4 @@ router.get('/sports/:id', sports_controller.sports_detail);
 // GET request for list of all sports items.
 router.get('/sports', sports_controller.sports_list);
 module.exports = router;
-// API for our resources
-exports.api = function(req, res) {
-res.write('[');
-res.write('{"resource":"sports", ');
-res.write(' "verbs":["GET","PUT", "DELETE"] ');
-res.write('}');
-res.write(']')
-res.send();
-};
+

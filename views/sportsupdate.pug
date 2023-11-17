@@ -1,0 +1,42 @@
+extends layout
+block content
+  h1= title
+  - let sportsid = toShow._id
+  - let name = toShow.name
+  - let hours = toShow.hours
+  - let players = toShow.players
+ 
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{sportsid}
+    
+  - let actionid = "/resource/sports/" + sportsid
+  form(id='sportsForm', action= actionid, method="PUT")
+    div.form-group
+      label.sportsAttr(for='name') sports name
+      input#name(type='text', name='name', value= name )
+    div.form-group
+      label.sportsAttr(for='hours') sports hours
+      input#hours(type='text', name='hours', value= hours )
+    div.form-group
+      label.sportsAttr(for='players') sports players
+      input#players(type='number', name='players', value= players )
+    input(type="submit")
+    
+    script.
+      document.forms['sportsForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Update succeeded")
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Update failed " + error )
+        });
+      });

@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+.vehiclesAttr {
+  background-color: aquamarine;
+  width: 120px;
+ }
+
+ #sportsForm {
+  background-color: violet;
+  width: 389px;
+}
+
+h1{
+  color: violet;
+}
