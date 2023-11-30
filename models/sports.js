@@ -15,8 +15,7 @@ const sportsSchema = mongoose.Schema({
         type: Number,
         required: true,
         min: 0,
-        max: 50000
+        max: 500000
     }
 });
-module.exports = mongoose.model("sports", 
-sportsSchema)
+module.exports = mongoose.model("sports", sportsSchema);
